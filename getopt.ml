@@ -1,24 +1,5 @@
 (* Module [Getopt]: parsing of command line arguments *)
-
-(*
-Copyright (C) 2000 Alain Frisch     
-email: Alain.Frisch@ens.fr
-web:   http://www.eleves.ens.fr:8080/home/frisch
-
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
-*)
-
-
-(* see getopt.mli*)
-
+(* Alain Frisch *)
 
 let noshort = '\000'
 let nolong  = ""
@@ -41,7 +22,6 @@ let extract_handle opt = function
   | _ -> raise (Error (Printf.sprintf 
 			 "Option %s must have an argument" opt))
 
-(* the long awful parsing function *)
 let parse opts others args first last =
   let find_long opt =
     try List.find (fun (_,l,_,_) -> opt = l) opts 
@@ -53,8 +33,11 @@ let parse opts others args first last =
     with Not_found ->
       raise (Error (Printf.sprintf "Unknown option -%c" opt))
   in
+
+  (* Anonymous arguments after -- *)
   let rec skip no =
     if (no <= last) then (others args.(no); skip (succ no)) in
+
   let rec aux no =
     if (no <= last) then
       let s = args.(no) in
@@ -62,7 +45,7 @@ let parse opts others args first last =
       if (l=0) then (others s; aux (succ no))
       else if  (s.[0] = '-') then
 	if (l >= 2) && (s.[1] = '-') then
-	  if (l = 2) then skip (succ no)
+	  if (l = 2) then skip (succ no) (* -- *)
 	  else match index_option s '=' with
 	    | Some i -> (* long option with argument *)
 		let opt = String.sub s 2 (i-2) in

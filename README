@@ -1,7 +1,7 @@
-Getopt: à la GNU GetOpt command line parsing
+Getopt: command line parsing à la GNU getopt
 
-Copyright (C) 2000 Alain Frisch
-distributed under LGPL : see LICENSE
+Copyright (C) 2000-2004 Alain Frisch
+distributed under an MIT-like license (see the COPYING file)
 email: Alain.Frisch@ens.fr
 web:   http://www.eleves.ens.fr:8080/home/frisch
 
@@ -9,7 +9,7 @@ web:   http://www.eleves.ens.fr:8080/home/frisch
 Contents of the distribution
 
 Changes      History of code changes
-LICENSE      A copy of the "GNU LESSER GENERAL PUBLIC LICENSE"
+COPYING      MIT license
 README       This file
 getopt.ml    source of Getopt (implementation)
 getopt.mli   source of Getopt (interface)
@@ -29,15 +29,7 @@ gives to the general parsing function a list of possible options, together
 with the behaviour of these options.  
 
 --------------------------------------------------------------------------
-Requirements
-
-I use the releases 3.00 of OCaml (should be OK with older version, except
-for the use of the new autolink feature).
-
---------------------------------------------------------------------------
 General usage information
 
-The documentation is included in the file getopt.mli;
-also have a look to sample.ml.
-
-There is no installation.
+The documentation is included in the file getopt.mli.
+There is an example in sample.ml.
