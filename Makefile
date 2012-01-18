@@ -1,38 +1,38 @@
-all: doc getopt.cmi getopt.cma
-allopt: doc getopt.cmi getopt.cma getopt.cmxa
+# OASIS_START
+# DO NOT EDIT (digest: bc1e05bfc8b39b664f29dae8dbd3ebbb)
 
-getopt.cmo: getopt.cmi getopt.ml
-	ocamlc -c getopt.ml
+SETUP = ocaml setup.ml
 
-getopt.cmi: getopt.mli
-	ocamlc -c getopt.mli
+build: setup.data
+	$(SETUP) -build $(BUILDFLAGS)
 
-getopt.cma: getopt.cmo
-	ocamlc -o getopt.cma -a getopt.cmo
+doc: setup.data build
+	$(SETUP) -doc $(DOCFLAGS)
 
-getopt.cmxa: getopt.cmx
-	ocamlopt -o getopt.cmxa -a getopt.cmx
+test: setup.data build
+	$(SETUP) -test $(TESTFLAGS)
 
-getopt.cmx: getopt.cmi getopt.ml
-	ocamlopt -c getopt.ml
+all: 
+	$(SETUP) -all $(ALLFLAGS)
 
-sample.cmo: getopt.cmi sample.ml
-	ocamlc -c sample.ml
+install: setup.data
+	$(SETUP) -install $(INSTALLFLAGS)
 
-sample: getopt.cma sample.cmo
-	ocamlc -o sample unix.cma getopt.cma sample.cmo
+uninstall: setup.data
+	$(SETUP) -uninstall $(UNINSTALLFLAGS)
 
-install:
-	ocamlfind install getopt META getopt.cmi getopt.cma $(wildcard getopt.cmxa) $(wildcard getopt.o) $(wildcard getopt.a)
+reinstall: setup.data
+	$(SETUP) -reinstall $(REINSTALLFLAGS)
 
-uninstall:
-	ocamlfind remove getopt
+clean: 
+	$(SETUP) -clean $(CLEANFLAGS)
 
-.PHONY: doc
-doc:
-	mkdir -p doc
-	ocamldoc -d doc -html getopt.mli
+distclean: 
+	$(SETUP) -distclean $(DISTCLEANFLAGS)
 
-clean:
-	rm -f *.cm[ioxa] *.cmxa *.a *.o sample *~
-	rm -Rf doc
+setup.data:
+	$(SETUP) -configure $(CONFIGUREFLAGS)
+
+.PHONY: build doc test all install uninstall reinstall clean distclean configure
+
+# OASIS_STOP
