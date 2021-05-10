@@ -1,0 +1,8 @@
+(library
+  (public_name getopt)
+  (modules getopt))
+
+(executable
+  (public_name sample)
+  (libraries getopt unix)
+  (modules sample))
